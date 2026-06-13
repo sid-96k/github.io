@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Interactive Explanation</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .meme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    @media (max-width: 900px) {
+      .meme-grid { grid-template-columns: 1fr; }
+    }
+    .accordion details {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+    }
+    .accordion summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .accordion p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <div class="brand">Conference Poster Companion</div>
+      <h1 class="page-title">Interactive Explanation</h1>
+      <p class="subtitle">
+        A meme-style walkthrough of the research. Use this page when someone wants the story, not just the poster.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-secondary" href="index.html">Home</a>
+        <a class="btn btn-secondary" href="references.html">References</a>
+        <a class="btn btn-secondary" href="authors.html">Authors</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+
+      <section class="card">
+        <span class="tag purple">The vibe</span>
+        <h2>How the research feels in one sentence</h2>
+        <p>
+          We are trying to stop airports from being selected like a random button-mash and instead choose them using
+          network logic, demand, and policy reasoning.
+        </p>
+      </section>
+
+      <div class="section meme-grid">
+        <section class="card">
+          <span class="tag orange">Problem</span>
+          <h3>“Why are these airports chosen?”</h3>
+          <img class="figure" src="assets/meme-1.jpg" alt="Meme explaining the problem" />
+          <p>Use a meme here to show how traditional selection can feel arbitrary.</p>
+        </section>
+
+        <section class="card">
+          <span class="tag teal">Method</span>
+          <h3>“Enter the model”</h3>
+          <img class="figure" src="assets/meme-2.jpg" alt="Meme explaining the method" />
+          <p>Use a meme here to show the model combining network effects and demand.</p>
+        </section>
+
+        <section class="card">
+          <span class="tag green">Result</span>
+          <h3>“The model said: not so fast”</h3>
+          <img class="figure" src="assets/meme-3.jpg" alt="Meme explaining the result" />
+          <p>Use a meme here to show the model changing airport priorities.</p>
+        </section>
+
+        <section class="card">
+          <span class="tag purple">Policy takeaway</span>
+          <h3>“More Avengers, less chaos”</h3>
+          <img class="figure" src="assets/chart-1.png" alt="Visual summary of policy takeaway" />
+          <p>Use a simple chart or visual summary for the policy implication.</p>
+        </section>
+      </div>
+
+      <section class="section accordion">
+        <details>
+          <summary>What problem are we solving?</summary>
+          <p>
+            We want a systematic way to choose airports and routes for regional connectivity schemes,
+            instead of relying on ad hoc selection.
+          </p>
+        </details>
+
+        <details>
+          <summary>What makes it different?</summary>
+          <p>
+            The framework combines network structure, demand, and optimization, so it captures practical aviation effects.
+          </p>
+        </details>
+
+        <details>
+          <summary>Why use memes?</summary>
+          <p>
+            Memes make the story memorable and help non-specialists understand the main idea quickly.
+          </p>
+        </details>
+      </section>
+
+      <section class="card">
+        <h2>One-line summary</h2>
+        <p>
+          The model helps pick airports and routes that add the most connectivity value while avoiding wasteful subsidy spending.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Replace the placeholder images with your own memes and visuals.
+    </div>
+  </footer>
+</body>
+</html>
