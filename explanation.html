@@ -3,18 +3,35 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Interactive Explanation</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 18px;
+    }
+
     .meme-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
     }
+
     @media (max-width: 900px) {
-      .meme-grid { grid-template-columns: 1fr; }
+      .meme-grid {
+        grid-template-columns: 1fr;
+      }
     }
+
+    .meme-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .meme-card p {
+      margin-top: 12px;
+    }
+
     .accordion details {
       background: white;
       border: 1px solid var(--border);
@@ -23,13 +40,36 @@
       margin-bottom: 12px;
       box-shadow: var(--shadow);
     }
+
     .accordion summary {
       cursor: pointer;
       font-weight: 700;
     }
+
     .accordion p {
       color: var(--muted);
       margin-bottom: 0;
+    }
+
+    .callout {
+      border-left: 5px solid var(--navy);
+      background: white;
+      padding: 16px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .meme-step {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 700;
     }
   </style>
 </head>
@@ -39,7 +79,8 @@
       <div class="brand">Conference Poster Companion</div>
       <h1 class="page-title">Interactive Explanation</h1>
       <p class="subtitle">
-        A meme-style walkthrough of the research. Use this page when someone wants the story, not just the poster.
+        A meme-style walkthrough of the research. This page explains why the problem matters,
+        why policy intervention is needed, and how the model helps.
       </p>
       <div class="hero-actions">
         <a class="btn btn-secondary" href="index.html">Home</a>
@@ -53,80 +94,116 @@
     <div class="container">
 
       <section class="card">
-        <span class="tag purple">The vibe</span>
-        <h2>How the research feels in one sentence</h2>
+        <span class="tag purple">The big picture</span>
+        <h2>Why do governments support airports and air routes?</h2>
         <p>
-          We are trying to stop airports from being selected like a random button-mash and instead choose them using
-          network logic, demand, and policy reasoning.
+          Because market forces alone do not always protect essential connectivity.
+          Airlines naturally prefer profitable routes, while socially valuable but less profitable
+          airports and routes can be neglected.
         </p>
       </section>
 
-      <div class="section meme-grid">
-        <section class="card">
-          <span class="tag orange">Problem</span>
-          <h3>“Why are these airports chosen?”</h3>
-          <img class="figure" src="assets/meme-1.jpg" alt="Meme explaining the problem" />
-          <p>Use a meme here to show how traditional selection can feel arbitrary.</p>
+      <div class="section story-grid">
+
+        <section class="card meme-card">
+          <span class="tag orange">Step 1</span>
+          <h3>Airlines follow profit, not always connectivity</h3>
+          <img class="figure" src="assets/memes/1_meme.jpg" alt="Meme showing profitable routes versus connectivity" />
+          <p>
+            Private airlines naturally focus on profitable routes. That can leave essential connectivity
+            underserved, especially in remote or lower-demand regions.
+          </p>
         </section>
 
-        <section class="card">
-          <span class="tag teal">Method</span>
-          <h3>“Enter the model”</h3>
-          <img class="figure" src="assets/meme-2.jpg" alt="Meme explaining the method" />
-          <p>Use a meme here to show the model combining network effects and demand.</p>
+        <section class="card meme-card">
+          <span class="tag teal">Step 2</span>
+          <h3>Why government intervention exists</h3>
+          <img class="figure" src="assets/memes/4_meme.jpg" alt="Meme showing financial stability versus connectivity" />
+          <p>
+            Policy must balance two goals at once: commercial sustainability and wider social connectivity.
+            That is why governments support airports and air routes.
+          </p>
         </section>
 
-        <section class="card">
-          <span class="tag green">Result</span>
-          <h3>“The model said: not so fast”</h3>
-          <img class="figure" src="assets/meme-3.jpg" alt="Meme explaining the result" />
-          <p>Use a meme here to show the model changing airport priorities.</p>
+        <section class="card meme-card">
+          <span class="tag purple">Step 3</span>
+          <h3>Ad-hoc selection is not enough</h3>
+          <img class="figure" src="assets/memes/9_meme.jpg" alt="Meme showing ad hoc versus rational data driven decision making" />
+          <p>
+            The key problem is not just whether to support connectivity, but how to select the right airports
+            and routes. Decisions should move from ad-hoc judgment to rational, data-driven policy.
+          </p>
         </section>
 
-        <section class="card">
-          <span class="tag purple">Policy takeaway</span>
-          <h3>“More Avengers, less chaos”</h3>
-          <img class="figure" src="assets/chart-1.png" alt="Visual summary of policy takeaway" />
-          <p>Use a simple chart or visual summary for the policy implication.</p>
+        <section class="card meme-card">
+          <span class="tag green">Step 4</span>
+          <h3>Our model brings the pieces together</h3>
+          <img class="figure" src="assets/memes/8_meme.jpg" alt="Meme showing the optimization model combining several factors" />
+          <p>
+            Our optimization framework combines spatial interdependency, socio-economic factors,
+            network effects, budget constraints, and demand considerations.
+          </p>
         </section>
+
+        <section class="card meme-card">
+          <span class="tag orange">Step 5</span>
+          <h3>Efficient spending with social gains</h3>
+          <img class="figure" src="assets/memes/6_meme.jpg" alt="Meme showing efficient spending versus social gains" />
+          <p>
+            The goal is not simply to spend more or support more airports. The goal is to spend smarter,
+            improve connectivity, and maximize public benefit.
+          </p>
+        </section>
+
       </div>
+
+      <section class="section">
+        <div class="callout">
+          <strong>Takeaway</strong>
+          In short, the question is not whether governments should support regional air connectivity.
+          The real question is: are we supporting the right airports, on the right routes, for the right reasons?
+        </div>
+      </section>
 
       <section class="section accordion">
         <details>
           <summary>What problem are we solving?</summary>
           <p>
             We want a systematic way to choose airports and routes for regional connectivity schemes,
-            instead of relying on ad hoc selection.
+            instead of relying on random or ad-hoc selection.
           </p>
         </details>
 
         <details>
-          <summary>What makes it different?</summary>
+          <summary>What makes this research different?</summary>
           <p>
-            The framework combines network structure, demand, and optimization, so it captures practical aviation effects.
+            The framework combines network structure, demand, and policy constraints, so it captures practical aviation effects.
           </p>
         </details>
 
         <details>
           <summary>Why use memes?</summary>
           <p>
-            Memes make the story memorable and help non-specialists understand the main idea quickly.
+            Memes make the research easier to remember and help non-specialists understand the main idea quickly.
           </p>
         </details>
       </section>
 
       <section class="card">
-        <h2>One-line summary</h2>
+        <span class="tag green">Final message</span>
+        <h2>What should policymakers remember?</h2>
         <p>
-          The model helps pick airports and routes that add the most connectivity value while avoiding wasteful subsidy spending.
+          Public support is useful, but it should be guided by evidence, rational criteria, and a clear objective:
+          improve connectivity while using public resources efficiently.
         </p>
       </section>
+
     </div>
   </main>
 
   <footer class="footer">
     <div class="container">
-      Replace the placeholder images with your own memes and visuals.
+      Replace the meme filenames with your final uploaded image names if needed.
     </div>
   </footer>
 </body>
