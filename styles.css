@@ -206,3 +206,20 @@ a {
   border-radius: 14px;
   border: 1px solid var(--border);
 }
+
+.meme-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.meme-half {
+  width: calc(50% - 8px);
+}
+
+@media (max-width: 900px) {
+  .meme-half {
+    width: 100%;
+  }
+}
