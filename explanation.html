@@ -239,8 +239,11 @@
       overflow: hidden;
     }
 
-    .story-progress-seg.filled {
+    .story-progress-fill {
+      height: 100%;
+      width: 0%;
       background: rgba(255, 255, 255, 0.95);
+      border-radius: 2px;
     }
 
     .story-header {
@@ -477,8 +480,9 @@
         <p class="muted small">
           Six stops, same story: why we started this research, then the five-step case for a smarter way
           to pick airports and routes. Tap any stop below to open it - the story keeps going until you
-          close it, so starting anywhere still carries you through the rest. Each stop leads with the meme;
-          tap "Show explanation" underneath it when you want the research point behind the joke.
+          close it, so starting anywhere still carries you through the rest. Each stop leads with the meme
+          and moves on by itself after a few seconds; tap "Show explanation" underneath it for the research
+          point, which also buys you more time before it moves on.
         </p>
 
         <div class="network-map" id="networkMap">
@@ -693,9 +697,69 @@
     slides.forEach(function () {
       var seg = document.createElement('div');
       seg.className = 'story-progress-seg';
+      var fill = document.createElement('div');
+      fill.className = 'story-progress-fill';
+      seg.appendChild(fill);
       progressWrap.appendChild(seg);
     });
     var segments = progressWrap.querySelectorAll('.story-progress-seg');
+
+    var BASE_MS = 5000;   // baseline time before auto-advancing
+    var STEP_MS = 5000;   // added per click on either toggle
+    var MAX_MS  = 30000;  // suggested cap - see notes
+    var slideStartedAt = null;
+    var budgetMs = BASE_MS;
+    var autoTimer = null;
+    var rafId = null;
+
+    function clearAutoTimer() {
+      if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    }
+
+    function updateProgressFill() {
+      if (slideStartedAt === null) { return; }
+      var elapsed = Date.now() - slideStartedAt;
+      var pct = Math.min(100, (elapsed / budgetMs) * 100);
+      var fill = segments[currentIndex] && segments[currentIndex].querySelector('.story-progress-fill');
+      if (fill) { fill.style.width = pct + '%'; }
+      if (pct < 100) {
+        rafId = requestAnimationFrame(updateProgressFill);
+      }
+    }
+
+    function scheduleAutoAdvance() {
+      if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+      if (document.hidden) { return; } // resumes via the visibilitychange listener below
+      var remaining = Math.max(0, budgetMs - (Date.now() - slideStartedAt));
+      autoTimer = setTimeout(function () {
+        autoTimer = null;
+        next();
+      }, remaining);
+    }
+
+    function startSlideTimer() {
+      slideStartedAt = Date.now();
+      budgetMs = BASE_MS;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      scheduleAutoAdvance();
+      rafId = requestAnimationFrame(updateProgressFill);
+    }
+
+    function extendSlideTimer() {
+      budgetMs = Math.min(MAX_MS, budgetMs + STEP_MS);
+      scheduleAutoAdvance();
+    }
+
+    document.addEventListener('visibilitychange', function () {
+      if (!viewer.classList.contains('open')) { return; }
+      if (document.hidden) {
+        if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+      } else {
+        slideStartedAt = Date.now(); // fresh countdown rather than penalizing time away
+        scheduleAutoAdvance();
+      }
+    });
 
     function setFlipped(flipped) {
       flipInner.classList.toggle('flipped', flipped);
@@ -723,7 +787,8 @@
       titleEl.textContent = s.title;
       captionEl.textContent = s.caption;
       segments.forEach(function (seg, i) {
-        seg.classList.toggle('filled', i <= currentIndex);
+        var fill = seg.querySelector('.story-progress-fill');
+        fill.style.width = i < currentIndex ? '100%' : '0%';
       });
       prevBtn.disabled = currentIndex === 0;
 
@@ -732,6 +797,7 @@
       if (document.activeElement === flipToggleFront || document.activeElement === flipToggleBack) {
         flipToggleFront.focus();
       }
+      startSlideTimer();
 
       liveRegion.textContent = s.tag + ': ' + s.title + '. Slide ' + (currentIndex + 1) + ' of ' + slides.length + '. Showing the meme - use Show explanation for the research point.';
     }
@@ -748,6 +814,7 @@
     }
 
     function closeStory() {
+      clearAutoTimer();
       viewer.classList.remove('open');
       viewer.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('story-lock');
@@ -842,11 +909,13 @@
 
     flipToggleFront.addEventListener('click', function () {
       setFlipped(true);
+      extendSlideTimer();
       flipToggleBack.focus();
     });
 
     flipToggleBack.addEventListener('click', function () {
       setFlipped(false);
+      extendSlideTimer();
       flipToggleFront.focus();
     });
 
