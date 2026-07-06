@@ -6,7 +6,24 @@
   <title>Interactive Explanation</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* ---------- kept from before ---------- */
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .meme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .meme-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .accordion details {
       background: white;
       border: 1px solid var(--border);
@@ -39,344 +56,6 @@
       display: block;
       margin-bottom: 6px;
     }
-
-    /* ---------- network map: desktop / tablet ---------- */
-    .network-map {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1000 / 400;
-      margin-top: 24px;
-    }
-
-    .network-map-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .route-path {
-      fill: none;
-      stroke: var(--border);
-      stroke-width: 3;
-      stroke-dasharray: 9 10;
-      stroke-linecap: round;
-    }
-
-    .map-nodes {
-      position: absolute;
-      inset: 0;
-    }
-
-    .map-node {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      background: none;
-      border: none;
-      padding: 4px;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .map-node-dot {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 700;
-      font-size: 1.15rem;
-      border: 3px solid white;
-      box-shadow: var(--shadow);
-      transition: transform 0.18s ease;
-    }
-
-    .map-node:hover .map-node-dot,
-    .map-node:focus-visible .map-node-dot {
-      transform: scale(1.1);
-    }
-
-    .map-node:focus-visible {
-      outline: 3px solid var(--navy);
-      outline-offset: 4px;
-      border-radius: 999px;
-    }
-
-    .map-node-label {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--text);
-      background: white;
-      padding: 3px 10px;
-      border-radius: 999px;
-      white-space: nowrap;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    }
-
-    .node-purple .map-node-dot { background: var(--purple); }
-    .node-orange .map-node-dot { background: var(--orange); }
-    .node-teal .map-node-dot   { background: var(--teal); }
-    .node-green .map-node-dot  { background: var(--green); }
-
-    /* ---------- network map: mobile fallback ---------- */
-    .network-map-mobile {
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .map-node-mobile {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 10px 16px;
-      cursor: pointer;
-      text-align: left;
-      box-shadow: var(--shadow);
-      font-family: inherit;
-    }
-
-    .map-node-mobile .map-node-dot {
-      width: 38px;
-      height: 38px;
-      font-size: 0.95rem;
-      flex-shrink: 0;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 700;
-    }
-
-    .map-node-mobile .map-node-label {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text);
-      background: none;
-      box-shadow: none;
-      padding: 0;
-    }
-
-    .map-node-mobile:focus-visible {
-      outline: 3px solid var(--navy);
-      outline-offset: 2px;
-    }
-
-    @media (max-width: 700px) {
-      .network-map { display: none; }
-      .network-map-mobile { display: flex; }
-    }
-
-    /* ---------- story viewer ---------- */
-    body.story-lock {
-      overflow: hidden;
-    }
-
-    .story-viewer {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .story-viewer.open {
-      display: flex;
-    }
-
-    .story-backdrop {
-      position: absolute;
-      inset: 0;
-      background: #050914;
-    }
-
-    .story-content {
-      position: relative;
-      width: min(430px, 100vw);
-      height: min(780px, 100vh);
-      background: #000;
-      border-radius: 20px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    }
-
-    @media (max-width: 480px) {
-      .story-content {
-        width: 100vw;
-        height: 100vh;
-        border-radius: 0;
-      }
-    }
-
-    .story-progress {
-      display: flex;
-      gap: 4px;
-      padding: 12px 12px 0;
-      flex: 0 0 auto;
-    }
-
-    .story-progress-seg {
-      flex: 1;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .story-progress-seg.filled {
-      background: rgba(255, 255, 255, 0.95);
-    }
-
-    .story-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      flex: 0 0 auto;
-    }
-
-    .story-tag {
-      color: white;
-      font-weight: 700;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: var(--navy);
-    }
-
-    .story-tag[data-color="purple"] { background: var(--purple); }
-    .story-tag[data-color="orange"] { background: var(--orange); }
-    .story-tag[data-color="teal"]   { background: var(--teal); }
-    .story-tag[data-color="green"]  { background: var(--green); }
-
-    .story-close {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      font-size: 1.2rem;
-      line-height: 1;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .story-close:hover, .story-close:focus-visible {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    .story-stage {
-      position: relative;
-      flex: 1 1 auto;
-      min-height: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #000;
-      touch-action: pan-y;
-    }
-
-    .story-image {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-
-    .story-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 3;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      font-size: 1.3rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.75;
-      transition: opacity 0.2s ease, background 0.2s ease;
-    }
-
-    .story-nav:hover, .story-nav:focus-visible {
-      opacity: 1;
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    .story-nav:disabled {
-      opacity: 0.2;
-      cursor: default;
-    }
-
-    .story-nav-prev { left: 10px; }
-    .story-nav-next { right: 10px; }
-
-    .story-footer {
-      flex: 0 0 auto;
-      max-height: 42%;
-      overflow-y: auto;
-      background: #0b0f1a;
-      padding: 16px 20px 22px;
-      color: white;
-    }
-
-    .story-title {
-      margin: 0 0 8px;
-      font-size: 1.05rem;
-      line-height: 1.3;
-    }
-
-    .story-caption {
-      margin: 0;
-      font-size: 0.92rem;
-      line-height: 1.55;
-      color: rgba(255, 255, 255, 0.82);
-    }
-
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .map-node-dot, .story-nav, .story-close {
-        transition: none;
-      }
-    }
   </style>
 </head>
 <body>
@@ -385,8 +64,7 @@
       <div class="brand">Conference Poster Companion</div>
       <h1 class="page-title">Interactive Explanation</h1>
       <p class="subtitle">
-        An interactive, meme-style walkthrough of the research. Tap through the route below to see
-        why the problem matters, why policy intervention is needed, and how the model helps.
+        A gamified walkthrough of the research. Tap or hover over the cards below to uncover why the problem matters, why policy intervention is needed, and how our model helps.
       </p>
       <div class="hero-actions">
         <a class="btn btn-secondary" href="index.html">Home</a>
@@ -410,94 +88,114 @@
       </section>
 
       <section class="card">
-        <span class="tag purple">Interactive walkthrough</span>
-        <h2>Tap a stop on the route to begin</h2>
-        <p class="muted small">
-          Six stops, same story: why we started this research, then the five-step case for a smarter way
-          to pick airports and routes. Tap any stop below to open it - the story keeps going until you
-          close it, so starting anywhere still carries you through the rest.
-        </p>
-
-        <div class="network-map" id="networkMap">
-          <svg class="network-map-svg" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
-            <path class="route-path" d="M 70 300 C 150 300 162 110 242 110 C 322 110 334 300 414 300 C 494 300 506 110 586 110 C 666 110 678 300 758 300 C 838 300 850 110 930 110" />
-          </svg>
-          <div class="map-nodes">
-            <button type="button" class="map-node node-purple" style="left:7%; top:75%;" data-slide="0">
-              <span class="map-node-dot">1</span>
-              <span class="map-node-label">Motivation</span>
-            </button>
-            <button type="button" class="map-node node-orange" style="left:24.2%; top:27.5%;" data-slide="2">
-              <span class="map-node-dot">2</span>
-              <span class="map-node-label">Step 1</span>
-            </button>
-            <button type="button" class="map-node node-teal" style="left:41.4%; top:75%;" data-slide="3">
-              <span class="map-node-dot">3</span>
-              <span class="map-node-label">Step 2</span>
-            </button>
-            <button type="button" class="map-node node-purple" style="left:58.6%; top:27.5%;" data-slide="4">
-              <span class="map-node-dot">4</span>
-              <span class="map-node-label">Step 3</span>
-            </button>
-            <button type="button" class="map-node node-green" style="left:75.8%; top:75%;" data-slide="5">
-              <span class="map-node-dot">5</span>
-              <span class="map-node-label">Step 4</span>
-            </button>
-            <button type="button" class="map-node node-orange" style="left:93%; top:27.5%;" data-slide="6">
-              <span class="map-node-dot">6</span>
-              <span class="map-node-label">Step 5</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="network-map-mobile" id="networkMapMobile">
-          <button type="button" class="map-node-mobile node-purple" data-slide="0">
-            <span class="map-node-dot">1</span>
-            <span class="map-node-label">Motivation</span>
-          </button>
-          <button type="button" class="map-node-mobile node-orange" data-slide="2">
-            <span class="map-node-dot">2</span>
-            <span class="map-node-label">Step 1</span>
-          </button>
-          <button type="button" class="map-node-mobile node-teal" data-slide="3">
-            <span class="map-node-dot">3</span>
-            <span class="map-node-label">Step 2</span>
-          </button>
-          <button type="button" class="map-node-mobile node-purple" data-slide="4">
-            <span class="map-node-dot">4</span>
-            <span class="map-node-label">Step 3</span>
-          </button>
-          <button type="button" class="map-node-mobile node-green" data-slide="5">
-            <span class="map-node-dot">5</span>
-            <span class="map-node-label">Step 4</span>
-          </button>
-          <button type="button" class="map-node-mobile node-orange" data-slide="6">
-            <span class="map-node-dot">6</span>
-            <span class="map-node-label">Step 5</span>
-          </button>
+        <span class="tag purple">Motivation</span>
+        <h2>Why are we doing this research?</h2>
+        <div class="meme-row">
+          <img class="figure meme-half" src="assets/10_meme.png" alt="Meme showing Dr. Strange teleporting" />
+          <img class="figure meme-half" src="assets/11_meme.png" alt="Meme giving reason that we can not teleport so we must make transport efficient" />
         </div>
       </section>
 
-      <div class="story-viewer" id="storyViewer" role="dialog" aria-modal="true" aria-label="Research walkthrough" aria-hidden="true">
-        <div class="story-backdrop"></div>
-        <div class="story-content">
-          <div class="story-progress" id="storyProgress"></div>
-          <div class="story-header">
-            <span class="story-tag" id="storyTag"></span>
-            <button type="button" class="story-close" id="storyClose" aria-label="Close story">&times;</button>
-          </div>
-          <div class="story-stage" id="storyStage">
-            <button type="button" class="story-nav story-nav-prev" id="storyPrev" aria-label="Previous slide">&#8249;</button>
-            <img class="story-image" id="storyImage" src="" alt="" draggable="false" />
-            <button type="button" class="story-nav story-nav-next" id="storyNext" aria-label="Next slide">&#8250;</button>
-          </div>
-          <div class="story-footer">
-            <h3 class="story-title" id="storyTitle"></h3>
-            <p class="story-caption" id="storyCaption"></p>
+      <!-- Gamified Story Grid Starts Here -->
+      <div class="section story-grid">
+
+        <!-- Step 1 Flip Card -->
+        <div class="flip-card" tabindex="0">
+          <div class="flip-card-inner">
+            <div class="flip-card-front card">
+              <div class="front-header">
+                <span class="tag orange">Step 1</span>
+                <h3>Airlines follow profit, not always connectivity</h3>
+              </div>
+              <img class="figure" src="assets/1_meme.jpg" alt="Meme showing profitable routes versus connectivity" />
+              <div class="flip-hint">Hover or tap to reveal explanation ↺</div>
+            </div>
+            <div class="flip-card-back card">
+              <span class="tag orange">The Reality</span>
+              <h3>Market Focus</h3>
+              <p>Private airlines naturally focus on profitable routes. That can leave essential connectivity underserved, especially in remote or lower-demand regions.</p>
+            </div>
           </div>
         </div>
-        <p class="visually-hidden" id="storyLive" aria-live="polite"></p>
+
+        <!-- Step 2 Flip Card -->
+        <div class="flip-card" tabindex="0">
+          <div class="flip-card-inner">
+            <div class="flip-card-front card">
+              <div class="front-header">
+                <span class="tag teal">Step 2</span>
+                <h3>Why government intervention often faces issues</h3>
+              </div>
+              <img class="figure" src="assets/4_meme.jpg" alt="Meme showing financial stability versus connectivity" />
+              <div class="flip-hint">Hover or tap to reveal explanation ↺</div>
+            </div>
+            <div class="flip-card-back card">
+              <span class="tag teal">The Dilemma</span>
+              <h3>Conflicting Goals</h3>
+              <p>Policy must balance two conflicting goals: commercial sustainability and broader social connectivity. It is a difficult line to walk without a framework.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 Flip Card -->
+        <div class="flip-card" tabindex="0">
+          <div class="flip-card-inner">
+            <div class="flip-card-front card">
+              <div class="front-header">
+                <span class="tag purple">Step 3</span>
+                <h3>Ad-hoc selection is not enough</h3>
+              </div>
+              <img class="figure" src="assets/9_meme.jpg" alt="Meme showing ad hoc versus rational data driven decision making" />
+              <div class="flip-hint">Hover or tap to reveal explanation ↺</div>
+            </div>
+            <div class="flip-card-back card">
+              <span class="tag purple">The Friction</span>
+              <h3>Moving Past Guesswork</h3>
+              <p>Governments have struggled due to conflicting objectives. Decisions must shift from ad-hoc judgment to rational, data-driven policy to select the right airports and routes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 Flip Card -->
+        <div class="flip-card" tabindex="0">
+          <div class="flip-card-inner">
+            <div class="flip-card-front card">
+              <div class="front-header">
+                <span class="tag green">Step 4</span>
+                <h3>Our model brings the pieces together</h3>
+              </div>
+              <img class="figure" src="assets/8_meme.jpg" alt="Meme showing the optimization model combining several factors" />
+              <div class="flip-hint">Hover or tap to reveal explanation ↺</div>
+            </div>
+            <div class="flip-card-back card">
+              <span class="tag green">The Solution</span>
+              <h3>Comprehensive Optimization</h3>
+              <p>Our optimization framework combines spatial interdependency, socio-economic factors, network effects, budget constraints, and demand considerations for better decision making.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5 Flip Card -->
+        <div class="flip-card" tabindex="0">
+          <div class="flip-card-inner">
+            <div class="flip-card-front card">
+              <div class="front-header">
+                <span class="tag orange">Step 5</span>
+                <h3>Efficient spending with social gains</h3>
+              </div>
+              <img class="figure" src="assets/6_meme.jpg" alt="Meme showing efficient spending versus social gains" />
+              <div class="flip-hint">Hover or tap to reveal explanation ↺</div>
+            </div>
+            <div class="flip-card-back card">
+              <span class="tag orange">The Goal</span>
+              <h3>Perfect Balance</h3>
+              <p>The goal is not simply to spend more or support more airports. The goal is to spend smarter, improve connectivity, and maximize public benefit.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
+      <!-- Gamified Story Grid Ends Here -->
 
       <section class="section">
         <div class="callout">
@@ -542,204 +240,5 @@
 
     </div>
   </main>
-
-  <script>
-  (function () {
-    var slides = [
-      {
-        tag: 'Motivation', color: 'purple',
-        title: 'Why are we doing this research?',
-        img: 'assets/10_meme.png',
-        alt: 'Meme showing Dr. Strange',
-        caption: "In an ideal world, we'd all have Doctor Strange's teleportation portals - instant travel, zero friction, perfect connectivity."
-      },
-      {
-        tag: 'Motivation', color: 'purple',
-        title: 'Why are we doing this research?',
-        img: 'assets/11_meme.png',
-        alt: 'Meme giving reason',
-        caption: "Back in reality, air travel is the closest thing we've got. So the real question becomes: how do we make that mode as efficient and accessible as possible? That's where this research begins."
-      },
-      {
-        tag: 'Step 1', color: 'orange',
-        title: 'Airlines follow profit, not always connectivity',
-        img: 'assets/1_meme.jpg',
-        alt: 'Meme showing profitable routes versus connectivity',
-        caption: 'Private airlines naturally focus on profitable routes. That can leave essential connectivity underserved, especially in remote or lower-demand regions.'
-      },
-      {
-        tag: 'Step 2', color: 'teal',
-        title: 'Why government intervention often faces issues',
-        img: 'assets/4_meme.jpg',
-        alt: 'Meme showing financial stability versus connectivity',
-        caption: 'Policy must balance two conflicting goals: commercial sustainability and broader social connectivity.'
-      },
-      {
-        tag: 'Step 3', color: 'purple',
-        title: 'Ad-hoc selection is not enough',
-        img: 'assets/9_meme.jpg',
-        alt: 'Meme showing ad hoc versus rational data driven decision making',
-        caption: 'Governments across the globe have struggled to implement regional connectivity schemes efficiently due to conflicting objectives. The key problem is not just whether to support connectivity, but how to select the right airports and routes. Decisions should shift from ad hoc judgment to rational, data-driven policy.'
-      },
-      {
-        tag: 'Step 4', color: 'green',
-        title: 'Our model brings the pieces together',
-        img: 'assets/8_meme.jpg',
-        alt: 'Meme showing the optimization model combining several factors',
-        caption: 'Our optimization framework combines spatial interdependency, socio-economic factors, network effects, budget constraints, and demand considerations for better decision making.'
-      },
-      {
-        tag: 'Step 5', color: 'orange',
-        title: 'Efficient spending with social gains',
-        img: 'assets/6_meme.jpg',
-        alt: 'Meme showing efficient spending versus social gains',
-        caption: 'The goal is not simply to spend more or support more airports. The goal is to spend smarter, improve connectivity, and maximize public benefit.'
-      }
-    ];
-
-    var currentIndex = 0;
-    var lastTrigger = null;
-    var pointerStartX = null;
-
-    var viewer      = document.getElementById('storyViewer');
-    var stage       = document.getElementById('storyStage');
-    var imageEl     = document.getElementById('storyImage');
-    var tagEl       = document.getElementById('storyTag');
-    var titleEl     = document.getElementById('storyTitle');
-    var captionEl   = document.getElementById('storyCaption');
-    var closeBtn    = document.getElementById('storyClose');
-    var prevBtn     = document.getElementById('storyPrev');
-    var nextBtn     = document.getElementById('storyNext');
-    var progressWrap = document.getElementById('storyProgress');
-    var liveRegion  = document.getElementById('storyLive');
-
-    slides.forEach(function () {
-      var seg = document.createElement('div');
-      seg.className = 'story-progress-seg';
-      progressWrap.appendChild(seg);
-    });
-    var segments = progressWrap.querySelectorAll('.story-progress-seg');
-
-    function render() {
-      var s = slides[currentIndex];
-      imageEl.src = s.img;
-      imageEl.alt = s.alt;
-      tagEl.textContent = s.tag;
-      tagEl.setAttribute('data-color', s.color);
-      titleEl.textContent = s.title;
-      captionEl.textContent = s.caption;
-      segments.forEach(function (seg, i) {
-        seg.classList.toggle('filled', i <= currentIndex);
-      });
-      prevBtn.disabled = currentIndex === 0;
-      liveRegion.textContent = s.tag + ': ' + s.title + '. Slide ' + (currentIndex + 1) + ' of ' + slides.length + '.';
-    }
-
-    function openStory(startIndex, trigger) {
-      currentIndex = startIndex;
-      lastTrigger = trigger || null;
-      render();
-      viewer.classList.add('open');
-      viewer.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('story-lock');
-      document.addEventListener('keydown', onKeydown);
-      closeBtn.focus();
-    }
-
-    function closeStory() {
-      viewer.classList.remove('open');
-      viewer.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('story-lock');
-      document.removeEventListener('keydown', onKeydown);
-      if (lastTrigger && typeof lastTrigger.focus === 'function') {
-        lastTrigger.focus();
-      }
-    }
-
-    function next() {
-      if (currentIndex < slides.length - 1) {
-        currentIndex++;
-        render();
-      } else {
-        closeStory();
-      }
-    }
-
-    function prev() {
-      if (currentIndex > 0) {
-        currentIndex--;
-        render();
-      }
-    }
-
-    function onKeydown(e) {
-      if (e.key === 'Escape') {
-        closeStory();
-      } else if (e.key === 'ArrowRight' || e.key === ' ') {
-        e.preventDefault();
-        next();
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        prev();
-      } else if (e.key === 'Tab') {
-        var focusable = [prevBtn, nextBtn, closeBtn].filter(function (el) { return !el.disabled; });
-        if (focusable.length === 0) { return; }
-        var firstEl = focusable[0];
-        var lastEl = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === firstEl) {
-          e.preventDefault();
-          lastEl.focus();
-        } else if (!e.shiftKey && document.activeElement === lastEl) {
-          e.preventDefault();
-          firstEl.focus();
-        }
-      }
-    }
-
-    stage.addEventListener('pointerdown', function (e) {
-      pointerStartX = e.clientX;
-    });
-
-    stage.addEventListener('pointercancel', function () {
-      pointerStartX = null;
-    });
-
-    stage.addEventListener('pointerup', function (e) {
-      if (pointerStartX === null) { return; }
-      if (e.target.closest('.story-nav')) {
-        pointerStartX = null;
-        return;
-      }
-      var dx = e.clientX - pointerStartX;
-      pointerStartX = null;
-      var rect = stage.getBoundingClientRect();
-      var tapX = e.clientX - rect.left;
-
-      if (Math.abs(dx) < 10) {
-        if (tapX < rect.width * 0.4) {
-          prev();
-        } else {
-          next();
-        }
-      } else if (dx <= -50) {
-        next();
-      } else if (dx >= 50) {
-        prev();
-      }
-    });
-
-    closeBtn.addEventListener('click', closeStory);
-    prevBtn.addEventListener('click', prev);
-    nextBtn.addEventListener('click', next);
-
-    var nodeButtons = document.querySelectorAll('.map-node, .map-node-mobile');
-    nodeButtons.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var idx = parseInt(btn.getAttribute('data-slide'), 10);
-        openStory(idx, btn);
-      });
-    });
-  })();
-  </script>
 </body>
 </html>
