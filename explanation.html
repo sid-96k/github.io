@@ -110,13 +110,16 @@
     }
 
     .map-node-label {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 700;
       color: var(--text);
       background: white;
-      padding: 3px 10px;
-      border-radius: 999px;
-      white-space: nowrap;
+      padding: 5px 10px;
+      border-radius: 14px;
+      white-space: normal;
+      max-width: 108px;
+      text-align: center;
+      line-height: 1.25;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     }
 
@@ -154,7 +157,16 @@
       position: relative;
       z-index: 1;
       display: flex;
-      min-height: 60px;
+      min-height: 68px;
+    }
+
+    .route-vertical-row-intro {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: auto;
+      padding: 4px 0 10px;
     }
 
     .route-vertical-half {
@@ -196,19 +208,23 @@
       flex: 0 1 auto;
       background: white;
       border: none;
-      padding: 9px 16px;
-      border-radius: 999px;
+      padding: 8px 14px;
+      border-radius: 14px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: var(--text);
       cursor: pointer;
       font-family: inherit;
-      white-space: nowrap;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      max-width: 148px;
+      text-align: center;
+      line-height: 1.25;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .route-vertical-row-intro .route-vertical-card {
+      max-width: 220px;
     }
 
     .route-vertical-card:hover {
@@ -545,45 +561,42 @@
             </button>
             <button type="button" class="map-node node-orange" style="left:24.2%; top:27.5%;" data-slide="2">
               <span class="map-node-dot">2</span>
-              <span class="map-node-label">Step 1</span>
+              <span class="map-node-label">Profit Over People</span>
             </button>
             <button type="button" class="map-node node-teal" style="left:41.4%; top:75%;" data-slide="3">
               <span class="map-node-dot">3</span>
-              <span class="map-node-label">Step 2</span>
+              <span class="map-node-label">Turbulence Ahead</span>
             </button>
             <button type="button" class="map-node node-purple" style="left:58.6%; top:27.5%;" data-slide="4">
               <span class="map-node-dot">4</span>
-              <span class="map-node-label">Step 3</span>
+              <span class="map-node-label">Flying Blind</span>
             </button>
             <button type="button" class="map-node node-green" style="left:75.8%; top:75%;" data-slide="5">
               <span class="map-node-dot">5</span>
-              <span class="map-node-label">Step 4</span>
+              <span class="map-node-label">Charting the Route</span>
             </button>
             <button type="button" class="map-node node-orange" style="left:93%; top:27.5%;" data-slide="6">
               <span class="map-node-dot">6</span>
-              <span class="map-node-label">Step 5</span>
+              <span class="map-node-label">Smooth Landing</span>
             </button>
           </div>
         </div>
 
         <div class="route-vertical" id="networkMapMobile">
-          <div class="route-vertical-row">
-            <div class="route-vertical-half route-vertical-half-left">
-              <button type="button" class="route-vertical-card map-node-mobile" data-slide="0">Motivation</button>
-              <span class="route-vertical-dot node-purple" aria-hidden="true">1</span>
-            </div>
-            <div class="route-vertical-half"></div>
+          <div class="route-vertical-row route-vertical-row-intro">
+            <span class="route-vertical-dot node-purple" aria-hidden="true">1</span>
+            <button type="button" class="route-vertical-card map-node-mobile" data-slide="0">Motivation</button>
           </div>
           <div class="route-vertical-row">
             <div class="route-vertical-half"></div>
             <div class="route-vertical-half route-vertical-half-right">
               <span class="route-vertical-dot node-orange" aria-hidden="true">2</span>
-              <button type="button" class="route-vertical-card map-node-mobile" data-slide="2">Step 1</button>
+              <button type="button" class="route-vertical-card map-node-mobile" data-slide="2">Profit Over People</button>
             </div>
           </div>
           <div class="route-vertical-row">
             <div class="route-vertical-half route-vertical-half-left">
-              <button type="button" class="route-vertical-card map-node-mobile" data-slide="3">Step 2</button>
+              <button type="button" class="route-vertical-card map-node-mobile" data-slide="3">Turbulence Ahead</button>
               <span class="route-vertical-dot node-teal" aria-hidden="true">3</span>
             </div>
             <div class="route-vertical-half"></div>
@@ -592,12 +605,12 @@
             <div class="route-vertical-half"></div>
             <div class="route-vertical-half route-vertical-half-right">
               <span class="route-vertical-dot node-purple" aria-hidden="true">4</span>
-              <button type="button" class="route-vertical-card map-node-mobile" data-slide="4">Step 3</button>
+              <button type="button" class="route-vertical-card map-node-mobile" data-slide="4">Flying Blind</button>
             </div>
           </div>
           <div class="route-vertical-row">
             <div class="route-vertical-half route-vertical-half-left">
-              <button type="button" class="route-vertical-card map-node-mobile" data-slide="5">Step 4</button>
+              <button type="button" class="route-vertical-card map-node-mobile" data-slide="5">Charting the Route</button>
               <span class="route-vertical-dot node-green" aria-hidden="true">5</span>
             </div>
             <div class="route-vertical-half"></div>
@@ -606,7 +619,7 @@
             <div class="route-vertical-half"></div>
             <div class="route-vertical-half route-vertical-half-right">
               <span class="route-vertical-dot node-orange" aria-hidden="true">6</span>
-              <button type="button" class="route-vertical-card map-node-mobile" data-slide="6">Step 5</button>
+              <button type="button" class="route-vertical-card map-node-mobile" data-slide="6">Smooth Landing</button>
             </div>
           </div>
         </div>
@@ -703,35 +716,35 @@
         caption: "Back in reality, air travel is the closest thing we've got. So the real question becomes: how do we make that mode as efficient and accessible as possible? That's where this research begins."
       },
       {
-        tag: 'Step 1', color: 'orange',
+        tag: 'Profit Over People', color: 'orange',
         title: 'Airlines follow profit, not always connectivity',
         img: 'assets/1_meme.jpg',
         alt: 'Meme showing profitable routes versus connectivity',
         caption: 'Private airlines naturally focus on profitable routes. That can leave essential connectivity underserved, especially in remote or lower-demand regions.'
       },
       {
-        tag: 'Step 2', color: 'teal',
+        tag: 'Turbulence Ahead', color: 'teal',
         title: 'Why government intervention often faces issues',
         img: 'assets/4_meme.jpg',
         alt: 'Meme showing financial stability versus connectivity',
         caption: 'Policy must balance two conflicting goals: commercial sustainability and broader social connectivity.'
       },
       {
-        tag: 'Step 3', color: 'purple',
+        tag: 'Flying Blind', color: 'purple',
         title: 'Ad-hoc selection is not enough',
         img: 'assets/9_meme.jpg',
         alt: 'Meme showing ad hoc versus rational data driven decision making',
         caption: 'Governments across the globe have struggled to implement regional connectivity schemes efficiently due to conflicting objectives. The key problem is not just whether to support connectivity, but how to select the right airports and routes. Decisions should shift from ad hoc judgment to rational, data-driven policy.'
       },
       {
-        tag: 'Step 4', color: 'green',
+        tag: 'Charting the Route', color: 'green',
         title: 'Our model brings the pieces together',
         img: 'assets/8_meme.jpg',
         alt: 'Meme showing the optimization model combining several factors',
         caption: 'Our optimization framework combines spatial interdependency, socio-economic factors, network effects, budget constraints, and demand considerations for better decision making.'
       },
       {
-        tag: 'Step 5', color: 'orange',
+        tag: 'Smooth Landing', color: 'orange',
         title: 'Efficient spending with social gains',
         img: 'assets/6_meme.jpg',
         alt: 'Meme showing efficient spending versus social gains',
@@ -771,9 +784,9 @@
     });
     var segments = progressWrap.querySelectorAll('.story-progress-seg');
 
-    var BASE_MS = 5000;   // baseline time before auto-advancing
+    var BASE_MS = 10000;  // baseline time before auto-advancing
     var STEP_MS = 5000;   // added per click on either toggle
-    var MAX_MS  = 30000;  // suggested cap - see notes
+    var MAX_MS  = 35000;  // cap, scaled up from 30000 to preserve 5 possible extensions (10,15,20,25,30,35)
     var slideStartedAt = null;
     var budgetMs = BASE_MS;
     var autoTimer = null;
