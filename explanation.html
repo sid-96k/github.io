@@ -125,105 +125,107 @@
     .node-teal .map-node-dot   { background: var(--teal); }
     .node-green .map-node-dot  { background: var(--green); }
 
-    /* ---------- network map: mobile fallback ---------- */
+    /* ---------- network map: mobile fallback (vertical zigzag) ---------- */
     .network-map-mobile {
       display: none;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 20px;
     }
 
-    .route-mobile-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      width: 100%;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px;
-      cursor: pointer;
-      text-align: left;
-      box-shadow: var(--shadow);
-      font-family: inherit;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .route-mobile-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
-    }
-
-    .route-mobile-card:focus-visible {
-      outline: 3px solid var(--navy);
-      outline-offset: 2px;
-    }
-
-    .route-mobile-thumb-wrap {
+    .route-vertical {
       position: relative;
-      flex-shrink: 0;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 24px;
+      padding: 4px 0;
     }
 
-    .route-mobile-thumb {
-      width: 64px;
-      height: 64px;
-      border-radius: 14px;
-      object-fit: cover;
-      display: block;
-      background: #f0f0f0;
-    }
-
-    .route-mobile-badge {
+    .route-vertical::before {
+      content: '';
       position: absolute;
-      top: -6px;
-      left: -6px;
-      width: 26px;
-      height: 26px;
+      top: 20px;
+      bottom: 20px;
+      left: 50%;
+      width: 3px;
+      background: var(--border);
+      transform: translateX(-50%);
+      z-index: 0;
+    }
+
+    .route-vertical-row {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 44px 1fr;
+      align-items: center;
+      column-gap: 10px;
+      min-height: 60px;
+    }
+
+    .route-vertical-dot {
+      grid-column: 2;
+      justify-self: center;
+      position: relative;
+      z-index: 1;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 0.75rem;
       font-weight: 700;
-      border: 2px solid white;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+      font-size: 0.85rem;
+      border: 3px solid var(--bg);
+      box-shadow: var(--shadow);
     }
 
-    .node-purple .route-mobile-badge { background: var(--purple); }
-    .node-orange .route-mobile-badge { background: var(--orange); }
-    .node-teal .route-mobile-badge   { background: var(--teal); }
-    .node-green .route-mobile-badge  { background: var(--green); }
+    .route-vertical-dot.node-purple { background: var(--purple); }
+    .route-vertical-dot.node-orange { background: var(--orange); }
+    .route-vertical-dot.node-teal   { background: var(--teal); }
+    .route-vertical-dot.node-green  { background: var(--green); }
 
-    .route-mobile-text {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      min-width: 0;
-    }
-
-    .route-mobile-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-    }
-
-    .route-mobile-title {
-      font-size: 0.95rem;
+    .route-vertical-card {
+      background: white;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 999px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--text);
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+      max-width: 100%;
       overflow: hidden;
+      text-overflow: ellipsis;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .route-vertical-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+    }
+
+    .route-vertical-card:focus-visible {
+      outline: 3px solid var(--navy);
+      outline-offset: 3px;
+    }
+
+    .route-vertical-row[data-side="left"] .route-vertical-card {
+      grid-column: 1;
+      justify-self: end;
+      text-align: right;
+    }
+
+    .route-vertical-row[data-side="right"] .route-vertical-card {
+      grid-column: 3;
+      justify-self: start;
+      text-align: left;
     }
 
     @media (max-width: 700px) {
       .network-map { display: none; }
-      .network-map-mobile { display: flex; }
+      .route-vertical { display: flex; }
     }
 
     /* ---------- story viewer ---------- */
@@ -254,6 +256,7 @@
       position: relative;
       width: min(430px, 100vw);
       height: min(780px, 100vh);
+      height: min(780px, 100dvh);
       background: #000;
       border-radius: 20px;
       overflow: hidden;
@@ -266,6 +269,7 @@
       .story-content {
         width: 100vw;
         height: 100vh;
+        height: 100dvh;
         border-radius: 0;
       }
     }
@@ -373,7 +377,7 @@
 
     .story-image {
       max-width: 100%;
-      max-height: 100%;
+      max-height: calc(100% - 64px);
       object-fit: contain;
       user-select: none;
       -webkit-user-drag: none;
@@ -440,8 +444,8 @@
       bottom: 16px;
       transform: translateX(-50%);
       z-index: 5;
-      background: rgba(255, 255, 255, 0.16);
-      border: none;
+      background: rgba(20, 20, 20, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       color: white;
       font-size: 0.85rem;
       font-weight: 700;
@@ -449,10 +453,11 @@
       border-radius: 999px;
       cursor: pointer;
       white-space: nowrap;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
     }
 
     .flip-toggle:hover, .flip-toggle:focus-visible {
-      background: rgba(255, 255, 255, 0.32);
+      background: rgba(20, 20, 20, 0.75);
     }
 
     .flip-toggle-back {
@@ -563,67 +568,31 @@
           </div>
         </div>
 
-        <div class="network-map-mobile" id="networkMapMobile">
-          <button type="button" class="route-mobile-card map-node-mobile node-purple" data-slide="0">
-            <span class="route-mobile-thumb-wrap">
-              <img class="route-mobile-thumb" src="assets/10_meme.png" alt="" />
-              <span class="route-mobile-badge">1</span>
-            </span>
-            <span class="route-mobile-text">
-              <span class="route-mobile-label">Motivation</span>
-              <span class="route-mobile-title">Why are we doing this research?</span>
-            </span>
-          </button>
-          <button type="button" class="route-mobile-card map-node-mobile node-orange" data-slide="2">
-            <span class="route-mobile-thumb-wrap">
-              <img class="route-mobile-thumb" src="assets/1_meme.jpg" alt="" />
-              <span class="route-mobile-badge">2</span>
-            </span>
-            <span class="route-mobile-text">
-              <span class="route-mobile-label">Step 1</span>
-              <span class="route-mobile-title">Airlines follow profit, not always connectivity</span>
-            </span>
-          </button>
-          <button type="button" class="route-mobile-card map-node-mobile node-teal" data-slide="3">
-            <span class="route-mobile-thumb-wrap">
-              <img class="route-mobile-thumb" src="assets/4_meme.jpg" alt="" />
-              <span class="route-mobile-badge">3</span>
-            </span>
-            <span class="route-mobile-text">
-              <span class="route-mobile-label">Step 2</span>
-              <span class="route-mobile-title">Why government intervention often faces issues</span>
-            </span>
-          </button>
-          <button type="button" class="route-mobile-card map-node-mobile node-purple" data-slide="4">
-            <span class="route-mobile-thumb-wrap">
-              <img class="route-mobile-thumb" src="assets/9_meme.jpg" alt="" />
-              <span class="route-mobile-badge">4</span>
-            </span>
-            <span class="route-mobile-text">
-              <span class="route-mobile-label">Step 3</span>
-              <span class="route-mobile-title">Ad-hoc selection is not enough</span>
-            </span>
-          </button>
-          <button type="button" class="route-mobile-card map-node-mobile node-green" data-slide="5">
-            <span class="route-mobile-thumb-wrap">
-              <img class="route-mobile-thumb" src="assets/8_meme.jpg" alt="" />
-              <span class="route-mobile-badge">5</span>
-            </span>
-            <span class="route-mobile-text">
-              <span class="route-mobile-label">Step 4</span>
-              <span class="route-mobile-title">Our model brings the pieces together</span>
-            </span>
-          </button>
-          <button type="button" class="route-mobile-card map-node-mobile node-orange" data-slide="6">
-            <span class="route-mobile-thumb-wrap">
-              <img class="route-mobile-thumb" src="assets/6_meme.jpg" alt="" />
-              <span class="route-mobile-badge">6</span>
-            </span>
-            <span class="route-mobile-text">
-              <span class="route-mobile-label">Step 5</span>
-              <span class="route-mobile-title">Efficient spending with social gains</span>
-            </span>
-          </button>
+        <div class="route-vertical" id="networkMapMobile">
+          <div class="route-vertical-row" data-side="left">
+            <button type="button" class="route-vertical-card map-node-mobile" data-slide="0">Motivation</button>
+            <span class="route-vertical-dot node-purple" aria-hidden="true">1</span>
+          </div>
+          <div class="route-vertical-row" data-side="right">
+            <button type="button" class="route-vertical-card map-node-mobile" data-slide="2">Step 1</button>
+            <span class="route-vertical-dot node-orange" aria-hidden="true">2</span>
+          </div>
+          <div class="route-vertical-row" data-side="left">
+            <button type="button" class="route-vertical-card map-node-mobile" data-slide="3">Step 2</button>
+            <span class="route-vertical-dot node-teal" aria-hidden="true">3</span>
+          </div>
+          <div class="route-vertical-row" data-side="right">
+            <button type="button" class="route-vertical-card map-node-mobile" data-slide="4">Step 3</button>
+            <span class="route-vertical-dot node-purple" aria-hidden="true">4</span>
+          </div>
+          <div class="route-vertical-row" data-side="left">
+            <button type="button" class="route-vertical-card map-node-mobile" data-slide="5">Step 4</button>
+            <span class="route-vertical-dot node-green" aria-hidden="true">5</span>
+          </div>
+          <div class="route-vertical-row" data-side="right">
+            <button type="button" class="route-vertical-card map-node-mobile" data-slide="6">Step 5</button>
+            <span class="route-vertical-dot node-orange" aria-hidden="true">6</span>
+          </div>
         </div>
       </section>
 
