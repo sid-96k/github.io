@@ -129,50 +129,96 @@
     .network-map-mobile {
       display: none;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       margin-top: 20px;
     }
 
-    .map-node-mobile {
+    .route-mobile-card {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       width: 100%;
       background: white;
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 10px 16px;
+      border-radius: 16px;
+      padding: 12px;
       cursor: pointer;
       text-align: left;
       box-shadow: var(--shadow);
       font-family: inherit;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .map-node-mobile .map-node-dot {
-      width: 38px;
-      height: 38px;
-      font-size: 0.95rem;
+    .route-mobile-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .route-mobile-card:focus-visible {
+      outline: 3px solid var(--navy);
+      outline-offset: 2px;
+    }
+
+    .route-mobile-thumb-wrap {
+      position: relative;
       flex-shrink: 0;
+    }
+
+    .route-mobile-thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      object-fit: cover;
+      display: block;
+      background: #f0f0f0;
+    }
+
+    .route-mobile-badge {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
+      font-size: 0.75rem;
       font-weight: 700;
+      border: 2px solid white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     }
 
-    .map-node-mobile .map-node-label {
+    .node-purple .route-mobile-badge { background: var(--purple); }
+    .node-orange .route-mobile-badge { background: var(--orange); }
+    .node-teal .route-mobile-badge   { background: var(--teal); }
+    .node-green .route-mobile-badge  { background: var(--green); }
+
+    .route-mobile-text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .route-mobile-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+
+    .route-mobile-title {
       font-size: 0.95rem;
       font-weight: 700;
       color: var(--text);
-      background: none;
-      box-shadow: none;
-      padding: 0;
-    }
-
-    .map-node-mobile:focus-visible {
-      outline: 3px solid var(--navy);
-      outline-offset: 2px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     @media (max-width: 700px) {
@@ -518,29 +564,65 @@
         </div>
 
         <div class="network-map-mobile" id="networkMapMobile">
-          <button type="button" class="map-node-mobile node-purple" data-slide="0">
-            <span class="map-node-dot">1</span>
-            <span class="map-node-label">Motivation</span>
+          <button type="button" class="route-mobile-card map-node-mobile node-purple" data-slide="0">
+            <span class="route-mobile-thumb-wrap">
+              <img class="route-mobile-thumb" src="assets/10_meme.png" alt="" />
+              <span class="route-mobile-badge">1</span>
+            </span>
+            <span class="route-mobile-text">
+              <span class="route-mobile-label">Motivation</span>
+              <span class="route-mobile-title">Why are we doing this research?</span>
+            </span>
           </button>
-          <button type="button" class="map-node-mobile node-orange" data-slide="2">
-            <span class="map-node-dot">2</span>
-            <span class="map-node-label">Step 1</span>
+          <button type="button" class="route-mobile-card map-node-mobile node-orange" data-slide="2">
+            <span class="route-mobile-thumb-wrap">
+              <img class="route-mobile-thumb" src="assets/1_meme.jpg" alt="" />
+              <span class="route-mobile-badge">2</span>
+            </span>
+            <span class="route-mobile-text">
+              <span class="route-mobile-label">Step 1</span>
+              <span class="route-mobile-title">Airlines follow profit, not always connectivity</span>
+            </span>
           </button>
-          <button type="button" class="map-node-mobile node-teal" data-slide="3">
-            <span class="map-node-dot">3</span>
-            <span class="map-node-label">Step 2</span>
+          <button type="button" class="route-mobile-card map-node-mobile node-teal" data-slide="3">
+            <span class="route-mobile-thumb-wrap">
+              <img class="route-mobile-thumb" src="assets/4_meme.jpg" alt="" />
+              <span class="route-mobile-badge">3</span>
+            </span>
+            <span class="route-mobile-text">
+              <span class="route-mobile-label">Step 2</span>
+              <span class="route-mobile-title">Why government intervention often faces issues</span>
+            </span>
           </button>
-          <button type="button" class="map-node-mobile node-purple" data-slide="4">
-            <span class="map-node-dot">4</span>
-            <span class="map-node-label">Step 3</span>
+          <button type="button" class="route-mobile-card map-node-mobile node-purple" data-slide="4">
+            <span class="route-mobile-thumb-wrap">
+              <img class="route-mobile-thumb" src="assets/9_meme.jpg" alt="" />
+              <span class="route-mobile-badge">4</span>
+            </span>
+            <span class="route-mobile-text">
+              <span class="route-mobile-label">Step 3</span>
+              <span class="route-mobile-title">Ad-hoc selection is not enough</span>
+            </span>
           </button>
-          <button type="button" class="map-node-mobile node-green" data-slide="5">
-            <span class="map-node-dot">5</span>
-            <span class="map-node-label">Step 4</span>
+          <button type="button" class="route-mobile-card map-node-mobile node-green" data-slide="5">
+            <span class="route-mobile-thumb-wrap">
+              <img class="route-mobile-thumb" src="assets/8_meme.jpg" alt="" />
+              <span class="route-mobile-badge">5</span>
+            </span>
+            <span class="route-mobile-text">
+              <span class="route-mobile-label">Step 4</span>
+              <span class="route-mobile-title">Our model brings the pieces together</span>
+            </span>
           </button>
-          <button type="button" class="map-node-mobile node-orange" data-slide="6">
-            <span class="map-node-dot">6</span>
-            <span class="map-node-label">Step 5</span>
+          <button type="button" class="route-mobile-card map-node-mobile node-orange" data-slide="6">
+            <span class="route-mobile-thumb-wrap">
+              <img class="route-mobile-thumb" src="assets/6_meme.jpg" alt="" />
+              <span class="route-mobile-badge">6</span>
+            </span>
+            <span class="route-mobile-text">
+              <span class="route-mobile-label">Step 5</span>
+              <span class="route-mobile-title">Efficient spending with social gains</span>
+            </span>
           </button>
         </div>
       </section>
