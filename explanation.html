@@ -133,7 +133,7 @@
     .route-vertical {
       position: relative;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
       margin-top: 24px;
       padding: 4px 0;
     }
@@ -153,18 +153,27 @@
     .route-vertical-row {
       position: relative;
       z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 44px 1fr;
-      align-items: center;
-      column-gap: 10px;
+      display: flex;
       min-height: 60px;
     }
 
+    .route-vertical-half {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .route-vertical-half-left {
+      justify-content: flex-end;
+    }
+
+    .route-vertical-half-right {
+      justify-content: flex-start;
+    }
+
     .route-vertical-dot {
-      grid-column: 2;
-      justify-self: center;
-      position: relative;
-      z-index: 1;
+      flex: 0 0 auto;
       width: 34px;
       height: 34px;
       border-radius: 50%;
@@ -184,6 +193,7 @@
     .route-vertical-dot.node-green  { background: var(--green); }
 
     .route-vertical-card {
+      flex: 0 1 auto;
       background: white;
       border: none;
       padding: 9px 16px;
@@ -209,18 +219,6 @@
     .route-vertical-card:focus-visible {
       outline: 3px solid var(--navy);
       outline-offset: 3px;
-    }
-
-    .route-vertical-row[data-side="left"] .route-vertical-card {
-      grid-column: 1;
-      justify-self: end;
-      text-align: right;
-    }
-
-    .route-vertical-row[data-side="right"] .route-vertical-card {
-      grid-column: 3;
-      justify-self: start;
-      text-align: left;
     }
 
     @media (max-width: 700px) {
@@ -569,29 +567,47 @@
         </div>
 
         <div class="route-vertical" id="networkMapMobile">
-          <div class="route-vertical-row" data-side="left">
-            <button type="button" class="route-vertical-card map-node-mobile" data-slide="0">Motivation</button>
-            <span class="route-vertical-dot node-purple" aria-hidden="true">1</span>
+          <div class="route-vertical-row">
+            <div class="route-vertical-half route-vertical-half-left">
+              <button type="button" class="route-vertical-card map-node-mobile" data-slide="0">Motivation</button>
+              <span class="route-vertical-dot node-purple" aria-hidden="true">1</span>
+            </div>
+            <div class="route-vertical-half"></div>
           </div>
-          <div class="route-vertical-row" data-side="right">
-            <button type="button" class="route-vertical-card map-node-mobile" data-slide="2">Step 1</button>
-            <span class="route-vertical-dot node-orange" aria-hidden="true">2</span>
+          <div class="route-vertical-row">
+            <div class="route-vertical-half"></div>
+            <div class="route-vertical-half route-vertical-half-right">
+              <span class="route-vertical-dot node-orange" aria-hidden="true">2</span>
+              <button type="button" class="route-vertical-card map-node-mobile" data-slide="2">Step 1</button>
+            </div>
           </div>
-          <div class="route-vertical-row" data-side="left">
-            <button type="button" class="route-vertical-card map-node-mobile" data-slide="3">Step 2</button>
-            <span class="route-vertical-dot node-teal" aria-hidden="true">3</span>
+          <div class="route-vertical-row">
+            <div class="route-vertical-half route-vertical-half-left">
+              <button type="button" class="route-vertical-card map-node-mobile" data-slide="3">Step 2</button>
+              <span class="route-vertical-dot node-teal" aria-hidden="true">3</span>
+            </div>
+            <div class="route-vertical-half"></div>
           </div>
-          <div class="route-vertical-row" data-side="right">
-            <button type="button" class="route-vertical-card map-node-mobile" data-slide="4">Step 3</button>
-            <span class="route-vertical-dot node-purple" aria-hidden="true">4</span>
+          <div class="route-vertical-row">
+            <div class="route-vertical-half"></div>
+            <div class="route-vertical-half route-vertical-half-right">
+              <span class="route-vertical-dot node-purple" aria-hidden="true">4</span>
+              <button type="button" class="route-vertical-card map-node-mobile" data-slide="4">Step 3</button>
+            </div>
           </div>
-          <div class="route-vertical-row" data-side="left">
-            <button type="button" class="route-vertical-card map-node-mobile" data-slide="5">Step 4</button>
-            <span class="route-vertical-dot node-green" aria-hidden="true">5</span>
+          <div class="route-vertical-row">
+            <div class="route-vertical-half route-vertical-half-left">
+              <button type="button" class="route-vertical-card map-node-mobile" data-slide="5">Step 4</button>
+              <span class="route-vertical-dot node-green" aria-hidden="true">5</span>
+            </div>
+            <div class="route-vertical-half"></div>
           </div>
-          <div class="route-vertical-row" data-side="right">
-            <button type="button" class="route-vertical-card map-node-mobile" data-slide="6">Step 5</button>
-            <span class="route-vertical-dot node-orange" aria-hidden="true">6</span>
+          <div class="route-vertical-row">
+            <div class="route-vertical-half"></div>
+            <div class="route-vertical-half route-vertical-half-right">
+              <span class="route-vertical-dot node-orange" aria-hidden="true">6</span>
+              <button type="button" class="route-vertical-card map-node-mobile" data-slide="6">Step 5</button>
+            </div>
           </div>
         </div>
       </section>
