@@ -781,11 +781,13 @@
     });
     var segments = progressWrap.querySelectorAll('.story-progress-seg');
 
-    var BASE_MS = 10000;  // baseline time before auto-advancing
-    var STEP_MS = 5000;   // added per click on either toggle
-    var MAX_MS  = 35000;  // cap, scaled up from 30000 to preserve 5 possible extensions (10,15,20,25,30,35)
+    var BASE_MS = 10000;       // baseline time before auto-advancing (viewing the meme)
+    var FIRST_STEP_MS = 10000; // the first click (revealing the explanation) grants this much
+    var STEP_MS = 5000;        // every click after the first grants this much
+    var MAX_MS  = 40000;       // cap: 10 base + 10 (1st click) + 5x4 (further clicks) = 40
     var slideStartedAt = null;
     var budgetMs = BASE_MS;
+    var hasExtendedOnce = false;
     var autoTimer = null;
     var rafId = null;
 
@@ -818,13 +820,16 @@
     function startSlideTimer() {
       slideStartedAt = Date.now();
       budgetMs = BASE_MS;
+      hasExtendedOnce = false;
       if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
       scheduleAutoAdvance();
       rafId = requestAnimationFrame(updateProgressFill);
     }
 
     function extendSlideTimer() {
-      budgetMs = Math.min(MAX_MS, budgetMs + STEP_MS);
+      var addMs = hasExtendedOnce ? STEP_MS : FIRST_STEP_MS;
+      hasExtendedOnce = true;
+      budgetMs = Math.min(MAX_MS, budgetMs + addMs);
       scheduleAutoAdvance();
     }
 
